@@ -2,8 +2,8 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 09:39:12
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-03-27 13:37:08
- * @Description: 
+ * @LastEditTime: 2024-03-29 13:21:53
+ * @Description:
  */
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
@@ -17,12 +17,25 @@ export default defineConfig({
 
   server: {
     port: 4200,
-    host: 'localhost',
+    host: '0.0.0.0',
+    proxy: {
+      '/api': {
+        target: 'http://10.0.7.109:9527/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        bypass(req: any, res, options: any) {
+          const proxyUrl =
+            new URL(options.rewrite(req.url) || '', options.target as string)
+              ?.href || '';
+          res.setHeader('x-res-proxy', proxyUrl);
+        }
+      }
+    }
   },
 
   preview: {
     port: 4300,
-    host: 'localhost',
+    host: 'localhost'
   },
 
   plugins: [react(), nxViteTsPaths()],
@@ -36,14 +49,14 @@ export default defineConfig({
     outDir: './dist/sandbox',
     reportCompressedSize: true,
     commonjsOptions: {
-      transformMixedEsModules: true,
-    },
+      transformMixedEsModules: true
+    }
   },
 
   test: {
     globals: true,
     cache: {
-      dir: './node_modules/.vitest',
+      dir: './node_modules/.vitest'
     },
     environment: 'jsdom',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
@@ -51,13 +64,13 @@ export default defineConfig({
     reporters: ['default'],
     coverage: {
       reportsDirectory: './coverage/sandbox',
-      provider: 'v8',
-    },
+      provider: 'v8'
+    }
   },
 
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
-  },
+  }
 });

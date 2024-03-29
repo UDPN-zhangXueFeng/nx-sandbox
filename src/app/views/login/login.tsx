@@ -2,15 +2,16 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-03-27 14:35:03
+ * @LastEditTime: 2024-03-29 13:29:26
  * @Description:
  */
+import { captchaApi } from '@/app/config/apis/login';
 import { KeyOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Space } from 'antd';
 import { useEffect, useState } from 'react';
 /* eslint-disable-next-line */
 export interface LoginProps {}
-
+let randomstr = '';
 type FieldType = {
   username?: string;
   password?: string;
@@ -27,7 +28,12 @@ export function Login(props: LoginProps) {
   }, []);
 
   const fetchCaptcha = () => {
-    console.log(123);
+    return captchaApi().then((res) => {
+      if (res.headers?.randomstr) {
+        randomstr = res.headers.randomstr;
+      }
+      setValue(window.URL?.createObjectURL(res.data));
+    });
   };
 
   const onFinish = (values: any) => {
