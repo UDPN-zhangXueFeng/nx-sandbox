@@ -2,15 +2,25 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-03-29 13:29:26
+ * @LastEditTime: 2024-04-01 09:51:54
  * @Description:
  */
 import { captchaApi } from '@/app/config/apis/login';
+import useHook from '@/app/hooks/useHook';
 import { KeyOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Space } from 'antd';
 import { useEffect, useState } from 'react';
+
 /* eslint-disable-next-line */
 export interface LoginProps {}
+enum LogEnum {
+  username = 'username',
+  password = 'password',
+  captcha = 'captcha',
+  imgPath = '/static/login/img/logo.png',
+  imgPath1 = '/static/login/img/login-1.png'
+}
+
 let randomstr = '';
 type FieldType = {
   username?: string;
@@ -19,6 +29,7 @@ type FieldType = {
 };
 
 export function Login(props: LoginProps) {
+  const { t } = useHook('login');
   const [form] = Form.useForm();
   const [value, setValue] = useState('');
   const [loadings, setLoadings] = useState<boolean>(false);
@@ -44,17 +55,14 @@ export function Login(props: LoginProps) {
     <div className="flex justify-between items-center h-screen">
       <div className=" flex-1 h-full bg-gradient-to-b from-[#BAE4F0] to-[#116BA8] flex flex-col justify-center items-center space-y-7">
         <div>
-          <img src="/static/login/img/logo.png" alt="" />
+          <img src={LogEnum.imgPath} alt="" />
         </div>
         <div className="text-[1.625rem] text-[#183673] font-[600] w-[36rem] ">
-          <div className="text-cneter leading-10">
-            Interoperable Payment Infrastructure For The Digital Currencies Of
-            Tomorrow
-          </div>
+          <div className="text-cneter leading-10">{t('login_0001')}</div>
         </div>
         <div>
           <img
-            src="/static/login/img/login-1.png"
+            src={LogEnum.imgPath1}
             className="w-[40.875rem] h-[37.0625rem]"
             alt=""
           />
@@ -62,12 +70,10 @@ export function Login(props: LoginProps) {
       </div>
       <div className="flex-1 justify-center items-center space-y-7 flex flex-col">
         <div className="text-[#097FF5] font-[800] text-[2.125rem] w-[36rem] leading-[2.875rem]">
-          <div className="text-center">
-            UDPN All-in-One Digital Currency Sandbox
-          </div>
+          <div className="text-center">{t('login_0002')}</div>
         </div>
         <div className="font-[500] leading-[2.4375rem] text-[#0A1629] text-[1.625rem]">
-          Central Bank Version
+          {t('login_0003')}
         </div>
         <div className="logoIcon">
           <Form
@@ -81,7 +87,7 @@ export function Login(props: LoginProps) {
             className="custom"
           >
             <Form.Item
-              label="Choose a role to sign in to the system"
+              label={t('login_0004')}
               name="type"
               initialValue={'5'}
               rules={[
@@ -91,9 +97,9 @@ export function Login(props: LoginProps) {
               ]}
             >
               <Radio.Group>
-                <Radio value="5"> Central Bank </Radio>
+                <Radio value="5"> {t('login_0005')} </Radio>
                 <Radio value="10" className="ml-6">
-                  Commercial Bank
+                  {t('login_0006')}
                 </Radio>
                 {/* <Radio value="1" className="ml-6">
                     operations
@@ -101,29 +107,38 @@ export function Login(props: LoginProps) {
               </Radio.Group>
             </Form.Item>
             <Form.Item<FieldType>
-              label="USERNAME"
-              name="username"
+              label={t('login_0007')}
+              name={LogEnum.username}
               rules={[
-                { required: true, message: 'Please input your username!' }
+                {
+                  required: true,
+                  message: t('pub_00001', { name: LogEnum.username })
+                }
               ]}
             >
               <Input addonAfter={<MailOutlined />} size="large" />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="PASSWORD"
-              name="password"
+              label={t('login_0008')}
+              name={LogEnum.password}
               rules={[
-                { required: true, message: 'Please input your password!' }
+                {
+                  required: true,
+                  message: t('pub_00001', { name: LogEnum.password })
+                }
               ]}
             >
               <Input.Password addonAfter={<KeyOutlined />} size="large" />
             </Form.Item>
             <Form.Item<FieldType>
-              label="CAPTCHA"
-              name="captcha"
+              label={t('login_0009')}
+              name={LogEnum.captcha}
               rules={[
-                { required: true, message: 'Please input your captcha!' }
+                {
+                  required: true,
+                  message: t('pub_00001', { name: LogEnum.captcha })
+                }
               ]}
             >
               <Space direction="vertical" size="middle" className="w-full">
@@ -147,7 +162,7 @@ export function Login(props: LoginProps) {
                 size="large"
                 loading={loadings}
               >
-                Log in
+                {t('login_0010')}
               </Button>
             </Form.Item>
           </Form>
