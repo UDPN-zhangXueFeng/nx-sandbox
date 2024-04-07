@@ -2,11 +2,15 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 10:43:19
+ * @LastEditTime: 2024-04-07 14:37:06
  * @Description:
  */
-import { captchaApi } from '@/app/config/apis/login';
+import { captchaApi, loginApi } from '@/app/config/apis/login';
+import { setUserInfo } from '@/app/core/store/counter/userSlice';
+
+import { useAppDispatch } from '@/app/hooks/reduxHook';
 import useHook from '@/app/hooks/useHook';
+import { getEncryptionData } from '@/app/tools/getEncryptionData';
 import { KeyOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Form, FormProps, Input, Radio, Space } from 'antd';
 import { useEffect, useState } from 'react';
@@ -48,8 +52,22 @@ export function Login(props: LoginProps) {
     });
   };
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
+  const dispatch = useAppDispatch();
+
+  const onFinish: FormProps<FieldType>['onFinish'] = (values: any) => {
+    setLoadings(true);
+    loginApi({
+      code: getEncryptionData(values.captcha),
+      password: getEncryptionData(values.password),
+      loginName: getEncryptionData(values.username),
+      orgType: 5,
+      randomstr
+    }).then((res) => {
+      setLoadings(false);
+      if (res.data.code === 0) {
+        dispatch(setUserInfo(res.data.data));
+      }
+    });
   };
 
   return (

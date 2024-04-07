@@ -1,4 +1,16 @@
+/*
+ * @Author: zhangxuefeng
+ * @Date: 2024-03-29 11:19:57
+ * @LastEditors: zhangxuefeng
+ * @LastEditTime: 2024-04-07 14:30:11
+ * @Description: 
+ */
 import axios from 'axios';
+
+const whitelist: any[] = [
+  '/api/rbac/v1/login',
+  '/api/rbac/v1/code/getCode'
+];
 
 const instance = axios.create({
   baseURL: '/api',
@@ -27,8 +39,12 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
-    // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
+    console.log(response);
+    if(response.status ===  200 && !whitelist.includes(response.config.url)){
+      if(response.data.code !== 0){
+        return Promise.reject(response.data.message);
+      }
+    }
     return response;
   },
   function (error) {
