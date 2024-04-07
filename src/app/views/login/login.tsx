@@ -2,13 +2,13 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-01 09:51:54
+ * @LastEditTime: 2024-04-07 10:43:19
  * @Description:
  */
 import { captchaApi } from '@/app/config/apis/login';
 import useHook from '@/app/hooks/useHook';
 import { KeyOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Radio, Space } from 'antd';
+import { Button, Form, FormProps, Input, Radio, Space } from 'antd';
 import { useEffect, useState } from 'react';
 
 /* eslint-disable-next-line */
@@ -22,6 +22,7 @@ enum LogEnum {
 }
 
 let randomstr = '';
+
 type FieldType = {
   username?: string;
   password?: string;
@@ -47,7 +48,7 @@ export function Login(props: LoginProps) {
     });
   };
 
-  const onFinish = (values: any) => {
+  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
   };
 
