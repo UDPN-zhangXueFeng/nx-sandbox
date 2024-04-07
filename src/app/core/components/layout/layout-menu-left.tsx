@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ut_getLS } from '@bsnbase/utils';
 
 import useHook from '@/app/hooks/useHook';
+import { useAppSelector } from '@/app/hooks/reduxHook';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Title, Paragraph } = Typography;
@@ -40,14 +41,6 @@ const LayOutMenuLeft = () => {
 
   const showModal = () => {
     setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
 
   const onClick = useCallback<Exclude<MenuProps['onClick'], undefined>>(
@@ -233,14 +226,10 @@ const LayOutMenuLeft = () => {
               color: token.colorPrimary
             }}
           >
-            {'123123'}
+            {useAppSelector((state) => state.userSlice.orgName)}
           </div>
-          {/* <p className="text-[#60a3ce]">
-                {'Hello ' + JSON.parse(userInfo)['userName'] + ' !'}
-              </p> */}
         </center>
 
-        <i className="font-bold text-lg">Sandbox Management</i>
         <Menu
           className="!border-0 w-full setTheme"
           mode="inline"

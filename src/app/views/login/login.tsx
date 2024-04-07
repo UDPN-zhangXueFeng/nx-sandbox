@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 14:37:06
+ * @LastEditTime: 2024-04-07 17:19:24
  * @Description:
  */
 import { captchaApi, loginApi } from '@/app/config/apis/login';
@@ -22,7 +22,8 @@ enum LogEnum {
   password = 'password',
   captcha = 'captcha',
   imgPath = '/static/login/img/logo.png',
-  imgPath1 = '/static/login/img/login-1.png'
+  imgPath1 = '/static/login/img/login-1.png',
+  routerPath = '/main/dashboard/dashboard'
 }
 
 let randomstr = '';
@@ -34,7 +35,7 @@ type FieldType = {
 };
 
 export function Login(props: LoginProps) {
-  const { t } = useHook('login');
+  const { t, routerPush } = useHook('login');
   const [form] = Form.useForm();
   const [value, setValue] = useState('');
   const [loadings, setLoadings] = useState<boolean>(false);
@@ -66,6 +67,7 @@ export function Login(props: LoginProps) {
       setLoadings(false);
       if (res.data.code === 0) {
         dispatch(setUserInfo(res.data.data));
+        routerPush(LogEnum.routerPath);
       }
     });
   };
