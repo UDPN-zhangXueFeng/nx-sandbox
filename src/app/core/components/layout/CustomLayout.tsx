@@ -2,7 +2,7 @@
  * @Author: W·S
  * @Date: 2023-11-14 11:28:47
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 16:47:24
+ * @LastEditTime: 2024-04-08 13:57:26
  * @Description: Description
  */
 
@@ -44,7 +44,7 @@ const CustomLayout = () => {
           >
             <div id="LayoutContentHeader" className=""></div>
             <Layout.Content
-              style={{ backgroundColor: token.colorBgContainer }}
+              style={{ backgroundColor: token.colorBgLayout }}
               className="overflow-auto relative mt-4 mr-1 ml-4 rounded-2xl "
             >
               <div ref={nodeRef} className="bg-gray-[500]">

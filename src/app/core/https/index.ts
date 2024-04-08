@@ -2,16 +2,16 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-29 11:19:57
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 14:30:11
+ * @LastEditTime: 2024-04-08 13:44:03
  * @Description: 
  */
+import { ut_getLS } from '@bsnbase/utils';
 import axios from 'axios';
 
 const whitelist: any[] = [
   '/api/rbac/v1/login',
   '/api/rbac/v1/code/getCode'
 ];
-
 const instance = axios.create({
   baseURL: '/api',
   timeout: 120 * 1000,
@@ -27,7 +27,9 @@ const instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
-    // 在发送请求之前做些什么
+    if(!whitelist.includes(config.url)){
+      config.headers.token = ut_getLS('token')
+    }
     return config;
   },
   function (error) {

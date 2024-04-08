@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-29 14:21:13
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-03-29 16:14:07
+ * @LastEditTime: 2024-04-08 13:56:15
  * @Description:
  */
 import i18n from 'i18next';
@@ -11,10 +11,12 @@ import { initReactI18next } from 'react-i18next';
 /** en-US */
 import CommonEn from '@/app/locales/en-US/common.json';
 import LoginEn from '@/app/locales/en-US/login.json';
+import ManagementEn from '@/app/locales/en-US/management.json';
 
 /** zh-CN */
 import CommonCn from '@/app/locales/zh-CN/common.json';
 import LoginCn from '@/app/locales/zh-CN/login.json';
+import ManagementCN from '@/app/locales/zh-CN/management.json';
 
 import { getLanguage, setLanguage } from '@bsnbase/utils';
 
@@ -26,14 +28,16 @@ export const resources: Record<
 > = {
   'en-US': {
     common: {
-      ...CommonEn
+      ...CommonEn,
     },
-    login: LoginEn
+    login: LoginEn,
+    management:ManagementEn
   },
   'zh-CN': {
     common: {
       ...CommonCn,
-      ...LoginCn
+      ...LoginCn,
+      ...ManagementCN
     }
   }
 };

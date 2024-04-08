@@ -10,7 +10,7 @@ import {
  * @Author: zhangxuefeng
  * @Date: 2024-04-07 15:48:28
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 16:57:45
+ * @LastEditTime: 2024-04-08 09:44:54
  * @Description:
  */
 export interface MenusType {
@@ -92,10 +92,6 @@ export const MENUS_MAN = [
     orgKey: 31,
     icon: <DesktopOutlined />,
     children: [
-      // {
-      //   label: 'FSP Management',
-      //   path: '/main/management/system-management/fsp'
-      // },
       {
         label: 'User Management',
         path: '/main/management/system-management/user'

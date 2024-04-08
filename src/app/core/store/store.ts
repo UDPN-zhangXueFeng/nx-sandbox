@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-06 13:26:22
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 13:40:02
+ * @LastEditTime: 2024-04-08 14:44:37
  * @Description:
  */
 import {
@@ -16,6 +16,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import themeSlice from './counter/themeSlice';
 import userSlice from './counter/userSlice';
+import commonSlice from './counter/common';
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
@@ -33,7 +34,7 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  // commonSlice,
+  commonSlice,
   themeSlice,
   userSlice
 });

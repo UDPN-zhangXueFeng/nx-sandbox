@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 09:39:12
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 16:28:53
+ * @LastEditTime: 2024-04-08 14:11:55
  * @Description:
  */
 import { StrictMode } from 'react';
@@ -20,11 +20,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={router} />
-      </PersistGate>
-    </Provider>
-  </StrictMode>
+  // <StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
+  </Provider>
+  // </StrictMode>
 );
