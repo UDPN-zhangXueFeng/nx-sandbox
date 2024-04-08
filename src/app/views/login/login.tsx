@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 17:19:24
+ * @LastEditTime: 2024-04-08 16:37:52
  * @Description:
  */
 import { captchaApi, loginApi } from '@/app/config/apis/login';
@@ -23,7 +23,10 @@ enum LogEnum {
   captcha = 'captcha',
   imgPath = '/static/login/img/logo.png',
   imgPath1 = '/static/login/img/login-1.png',
-  routerPath = '/main/dashboard/dashboard'
+  routerPath = 'main/management/system-management/role',
+  initValName = 'centraltest',
+  initValPassword = '123456'
+  // routerPath = '/main/dashboard/dashboard'
 }
 
 let randomstr = '';
@@ -55,7 +58,7 @@ export function Login(props: LoginProps) {
 
   const dispatch = useAppDispatch();
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values: any) => {
+  const onFinish: FormProps<FieldType>['onFinish'] = (values: GlobalAny) => {
     setLoadings(true);
     loginApi({
       code: getEncryptionData(values.captcha),
@@ -130,6 +133,7 @@ export function Login(props: LoginProps) {
             <Form.Item<FieldType>
               label={t('login_0007')}
               name={LogEnum.username}
+              initialValue={LogEnum.initValName}
               rules={[
                 {
                   required: true,
@@ -142,6 +146,7 @@ export function Login(props: LoginProps) {
 
             <Form.Item<FieldType>
               label={t('login_0008')}
+              initialValue={LogEnum.initValPassword}
               name={LogEnum.password}
               rules={[
                 {

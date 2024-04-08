@@ -1,183 +1,127 @@
-/*
- * @Author: W·S
- * @Date: 2023-11-14 11:28:47
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 16:00:32
- * @Description: Description
- */
-
-import { ut_getLS } from '@bsnbase/utils';
-import {
-  Breadcrumb,
-  Button,
-  Divider,
-  Dropdown,
-  Layout,
-  MenuProps,
-  Space,
-  theme
-} from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { DownOutlined } from '@ant-design/icons';
+import { Layout, Divider, Space, Button, Breadcrumb, Dropdown } from 'antd';
+import { t } from 'i18next';
 import { NavLink, useMatches } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import modal from 'antd/es/modal';
-import useHook from '@/app/hooks/useHook';
-// import { locales } from '@/locales/i18n.config';
+import { token, userInfo } from '../../store/counter/userSlice';
+import { useAppSelector } from '@/app/hooks/reduxHook';
+import { useToken } from '@ant-design/pro-provider';
+import { useEffect, useMemo, useState } from 'react';
 
-const { useToken } = theme;
-export default function LayOutMenuTop() {
-  const { token } = useToken();
+export const LayOutMenuTop = () => {
   const [bankTitle, setBankTitle] = useState('');
-  const { t } = useTranslation();
-  const { routerPush } = useHook();
-  // const { menuProps } = useMenus();
-  // const { pathname } = useLocation();
+  const primary = useAppSelector(
+    (state) => state.themeSlice.theme.token.colorPrimary
+  );
+  const { token } = useToken();
   const matches = useMatches();
-  const userInfo = ut_getLS('userInfo');
-  const breadItems = useMemo(() => {
-    const crumbs = matches.filter((match: any) => Boolean(match.data?.limit));
-    return crumbs;
-  }, [matches]);
   useEffect(() => {
     setBankTitle('(Central Bank Version)');
-    // if (ut_getLS('orgType') === '5') {
-    //   setBankTitle('(Central Bank)');
-    // }
-    // if (ut_getLS('orgType') === '10') {
-    //   setBankTitle('(Commercial Bank A)');
-    // }
   }, []);
-  // const changeLanguage = useCallback(() => {
-  //   setLanguage(i18n.language === locales[0] ? locales[1] : locales[0]);
-  //   i18n.changeLanguage(i18n.language === locales[0] ? locales[1] : locales[0]);
-  // }, [i18n]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const items: MenuProps['items'] = [
-    // {
-    //   key: 1,
-    //   label: (
-    //     <>
-    //       <a
-    //         onClick={() => {
-    //           Modal.info({
-    //             title: '修改密码',
-    //             icon: null,
-    //             closable: true,
-    //             content: <UpdatePwd />,
-    //             footer: null
-    //           });
-    //         }}
-    //       >
-    //         修改密码
-    //       </a>
-    //     </>
-    //   )
-    // },
-    {
-      label: <div>123123</div>,
-      key: '0'
-    }
-  ];
-
+  const breadItems = useMemo(() => {
+    const crumbs = matches.filter((match: GlobalAny) =>
+      Boolean(match.data?.limit)
+    );
+    return crumbs;
+  }, [matches]);
   return (
-    <Layout.Header
-      style={{
-        backgroundColor: token.colorBgContainer,
-        height: 'auto',
-        padding: '0 0 0 0'
-      }}
-    >
-      <div
+    <>
+      <Layout.Header
         style={{
-          backgroundColor: token.colorPrimary
+          backgroundColor: token.colorBgContainer,
+          height: 'auto',
+          padding: '0 0 0 0'
         }}
-        className="bg-[#4f5f7c] text-white  px-8 w-full flex items-center justify-between h-20 rounded-2xl"
       >
-        <div className="flex flex-1 items-center justify-between">
-          <div
-            id="LayOutMenuTopID"
-            className="font-bold text-[2rem] flex justify-between items-center space-x-8"
-          >
-            <img
-              src="/static/login/img/logo.png"
-              alt=""
-              className="w-[8.5rem] h-[4.0625rem]"
-            />
-            <Divider
-              type="vertical"
-              className="border-[0.1875rem] border-[#183673] h-6 hidden xl:block"
-            />
-            <div className="flex  justify-start flex-col xxl:flex-row">
-              <span
-                className="text-[#183673] text-[1rem]  xxl:text-[1.8rem] font-[800] hidden xl:block xl:text-[1.4rem] h-[1.875rem]"
-                style={{
-                  color: token.colorBgContainer
-                }}
-              >
-                {t('OS_P000')}
-              </span>
-              <span
-                className="text-[#183673] mt-[0.3125rem] text-[0.8rem] xxl:text-[1.3rem] ml-2"
-                style={{
-                  color: token.colorBgContainer
-                }}
-              >
-                {bankTitle}
-              </span>
-            </div>
-          </div>
-          <div>
-            <div className="mr-[20px]">
-              <Space size={'large'}>
-                <span className="text-[0.875rem] text-white cursor-not-allowed">
-                  User Manual
-                </span>
-                <Button
-                  type="link"
-                  className="text-[0.875rem] text-white"
-                  onClick={() =>
-                    window.open(
-                      '/UDPN AII-in-One Digital Currency Sandbox OpenAPI.pdf'
-                    )
-                  }
+        <div
+          style={{
+            backgroundColor: primary
+          }}
+          className="bg-[#4f5f7c] text-white  px-8 w-full flex items-center justify-between h-20 rounded-2xl"
+        >
+          <div className="flex flex-1 items-center justify-between">
+            <div
+              id="LayOutMenuTopID"
+              className="font-bold text-[2rem] flex justify-between items-center space-x-8"
+            >
+              <img
+                src="/static/login/img/logo.png"
+                alt=""
+                className="w-[8.5rem] h-[4.0625rem]"
+              />
+              <Divider
+                type="vertical"
+                className="border-[0.1875rem] border-[#183673] h-6 hidden xl:block"
+              />
+              <div className="flex  justify-start flex-col xxl:flex-row">
+                <span
+                  className="text-[#183673] text-[1rem]  xxl:text-[1.8rem] font-[800] hidden xl:block xl:text-[1.4rem] h-[1.875rem]"
+                  style={{
+                    color: token.colorBgContainer
+                  }}
                 >
-                  OpenAPIs
-                </Button>
-                <span className="text-[0.875rem] text-white cursor-not-allowed">
-                  Technical Support
+                  {t('OS_P000')}
                 </span>
-              </Space>
+                <span
+                  className="text-[#183673] mt-[0.3125rem] text-[0.8rem] xxl:text-[1.3rem] ml-2"
+                  style={{
+                    color: token.colorBgContainer
+                  }}
+                >
+                  {bankTitle}
+                </span>
+              </div>
             </div>
-            <Breadcrumb
-              items={breadItems
-                .filter(
-                  (_item, _index) =>
-                    (breadItems.length > 1 && _index > 0) ||
-                    breadItems.length === 1
-                )
-                .map((_item) => {
-                  return {
-                    title: (
-                      <NavLink
-                        key={_item.pathname}
-                        to={`${_item.pathname}`}
-                        className="text-lg font-bold !text-white"
-                      >
-                        {t(
-                          (_item.data as { limit: string; label?: string })
-                            ?.label ??
+            <div>
+              <div className="mr-[20px]">
+                <Space size={'large'}>
+                  <span className="text-[0.875rem] text-white cursor-not-allowed">
+                    User Manual
+                  </span>
+                  <Button
+                    type="link"
+                    className="text-[0.875rem] text-white"
+                    onClick={() =>
+                      window.open(
+                        '/UDPN AII-in-One Digital Currency Sandbox OpenAPI.pdf'
+                      )
+                    }
+                  >
+                    OpenAPIs
+                  </Button>
+                  <span className="text-[0.875rem] text-white cursor-not-allowed">
+                    Technical Support
+                  </span>
+                </Space>
+              </div>
+              <Breadcrumb
+                items={breadItems
+                  .filter(
+                    (_item, _index) =>
+                      (breadItems.length > 1 && _index > 0) ||
+                      breadItems.length === 1
+                  )
+                  .map((_item) => {
+                    return {
+                      title: (
+                        <NavLink
+                          key={_item.pathname}
+                          to={`${_item.pathname}`}
+                          className="text-lg font-bold !text-white"
+                        >
+                          {t(
                             (_item.data as { limit: string; label?: string })
-                              .limit
-                        )}
-                      </NavLink>
-                    )
-                  };
-                })}
-            />
+                              ?.label ??
+                              (_item.data as { limit: string; label?: string })
+                                .limit
+                          )}
+                        </NavLink>
+                      )
+                    };
+                  })}
+              />
+            </div>
           </div>
-        </div>
-        {/* <CustomButton
+          {/* <CustomButton
           type="primary"
           className="text-white border-0 hover:!bg-[#7CA2EA] bg-[#7CA2EA] rounded-2xl px-3 py-1 space-x-3 h-12 flex items-center cursor-pointer"
           onClick={changeLanguage}
@@ -199,8 +143,8 @@ export default function LayOutMenuTop() {
           </svg>
         </CustomButton> */}
 
-        <div>
-          {/* <Dropdown menu={menuProps}>
+          <div>
+            {/* <Dropdown menu={menuProps}>
             <div className="bg-[#7CA2EA] rounded-2xl px-3 py-1 space-x-3 h-12 flex items-center cursor-pointer">
               <Avatar size={35}>USER</Avatar>
               <span>{loginName}</span>
@@ -208,21 +152,22 @@ export default function LayOutMenuTop() {
             </div>
           </Dropdown> */}
 
-          <Dropdown menu={{ items }} trigger={['click']}>
-            <a onClick={(e) => e.preventDefault()}>
+            <Dropdown trigger={['click']}>
+              {/* <a onClick={(e) => e.preventDefault()}> */}
               <Space>
                 <img
                   src="/static/login/img/Vector.png"
                   className="w-[2.5rem] mt-6"
                   alt=""
                 />
-                <span className="text-white">{'23123132'}</span>
+                <span className="text-white">{'11111'}</span>
                 <DownOutlined className="text-white" />
               </Space>
-            </a>
-          </Dropdown>
+              {/* </a> */}
+            </Dropdown>
+          </div>
         </div>
-      </div>
-    </Layout.Header>
+      </Layout.Header>
+    </>
   );
-}
+};

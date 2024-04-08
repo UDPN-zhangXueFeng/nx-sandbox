@@ -13,11 +13,19 @@ import {
   getRoleUpdateStatusApi
 } from '@/app/config/apis/management/role';
 
+enum RoleEnum {
+  locale = 'management',
+  formKey1 = 'roleName',
+  formKey2 = 'describes',
+  formKey3 = 'status',
+  routerPath = '/main/management/system-management/role/edit'
+}
+
 /* eslint-disable-next-line */
 export interface SysRoleProps {}
 
 export function SysRole(props: SysRoleProps) {
-  const { t, routerPush } = useHook('management');
+  const { t, routerPush } = useHook(RoleEnum.locale);
   const TableActionRef = useRef<CustomTableRef>();
   const columns = useMemo<ProColumns<GlobalAny>[]>(
     () => [
@@ -29,16 +37,16 @@ export function SysRole(props: SysRoleProps) {
       },
       {
         title: t('mange_00002'),
-        dataIndex: 'roleName'
+        dataIndex: RoleEnum.formKey1
       },
       {
         title: t('mange_00003'),
         hideInSearch: true,
-        dataIndex: 'describes'
+        dataIndex: RoleEnum.formKey2
       },
       {
         title: t('mange_00004'),
-        dataIndex: 'status',
+        dataIndex: RoleEnum.formKey3,
         valueEnum: {
           0: t(`ACT_Enable`),
           1: t(`ACT_Disable`)
@@ -56,7 +64,7 @@ export function SysRole(props: SysRoleProps) {
         label: t('ACT_Edit'),
         show: () => true,
         onClick: async (data) => {
-          routerPush(`edit?roleId=${data.roleId}`);
+          routerPush(`${RoleEnum.routerPath}?roleId=${data.roleId}`);
         }
       },
       {
@@ -66,7 +74,7 @@ export function SysRole(props: SysRoleProps) {
         onClick: (data) => {
           modal.confirm({
             title: t('ACT_Enable'),
-            content: t('SysRole0034').replace('****', data.roleName),
+            content: t('mange_00008', { key: data.roleName }),
             okText: t('ACT_Confirm'),
             cancelText: t('ACT_Cancel'),
             onOk: async () => {
@@ -76,7 +84,7 @@ export function SysRole(props: SysRoleProps) {
               });
               if (res.data.code !== 0) return;
               message.success(t('PRO_Success', { p: t('ACT_Enable') }));
-              (TableActionRef as any)?.current?.actionRef.current.reset();
+              (TableActionRef as GlobalAny)?.current?.actionRef.current.reset();
             }
           });
         }
@@ -98,7 +106,7 @@ export function SysRole(props: SysRoleProps) {
               });
               if (res.data.code !== 0) return;
               message.success(t('PRO_Success', { p: t('ACT_Disable') }));
-              (TableActionRef as any)?.current?.actionRef.current.reset();
+              (TableActionRef as GlobalAny)?.current?.actionRef.current.reset();
             }
           });
         }
@@ -110,7 +118,7 @@ export function SysRole(props: SysRoleProps) {
         onClick: (data) => {
           modal.confirm({
             title: t('ACT_Delete'),
-            content: t('SysRole0036').replace('****', data.roleName),
+            content: t('mange_00009', { key: data.roleName }),
             okText: t('ACT_Confirm'),
             cancelText: t('ACT_Cancel'),
             onOk: async () => {
@@ -119,7 +127,7 @@ export function SysRole(props: SysRoleProps) {
               });
               if (res.data.code !== 0) return;
               message.success(t('PRO_Success', { p: t('ACT_Delete') }));
-              (TableActionRef as any)?.current?.actionRef.current.reset();
+              (TableActionRef as GlobalAny)?.current?.actionRef.current.reset();
             }
           });
         }
@@ -142,7 +150,7 @@ export function SysRole(props: SysRoleProps) {
             key="button"
             icon={<PlusOutlined />}
             onClick={() => {
-              routerPush('edit');
+              routerPush(RoleEnum.routerPath);
             }}
             type="primary"
           >

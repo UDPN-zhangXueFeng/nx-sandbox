@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-04-07 13:25:10
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 16:44:08
+ * @LastEditTime: 2024-04-08 16:35:30
  * @Description: 
  */
 import { createReduxFunction } from '@/app/hooks/reduxHook';
@@ -26,5 +26,5 @@ const themeSlice = createSlice({
 });
 export const useThemeReduxFunction = createReduxFunction(themeSlice);
 export const { setTheme } = themeSlice.actions;
-export const themeToken = (state: any) => state.theme;
+export const themeToken = (state: GlobalAny) => state.theme;
 export default themeSlice.reducer;

@@ -2,16 +2,16 @@
  * @Author: W·S
  * @Date: 2023-11-14 11:28:47
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 13:57:26
+ * @LastEditTime: 2024-04-08 16:46:56
  * @Description: Description
  */
 
 import { ConfigProvider, Layout, theme } from 'antd';
-import LayOutMenuTop from './layout-menu-top';
 import { useOutlet } from 'react-router-dom';
 import { useRef } from 'react';
 import LayOutMenuLeft from './layout-menu-left';
 import { useAppSelector } from '@/app/hooks/reduxHook';
+import { LayOutMenuTop } from './layout-menu-top';
 const { useToken } = theme;
 
 const CustomLayout = () => {

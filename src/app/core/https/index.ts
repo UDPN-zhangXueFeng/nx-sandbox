@@ -2,13 +2,13 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-29 11:19:57
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 13:44:03
+ * @LastEditTime: 2024-04-08 16:35:02
  * @Description: 
  */
 import { ut_getLS } from '@bsnbase/utils';
 import axios from 'axios';
 
-const whitelist: any[] = [
+const whitelist: GlobalAny[] = [
   '/api/rbac/v1/login',
   '/api/rbac/v1/code/getCode'
 ];

@@ -16,7 +16,10 @@
         "plugin:@nx/typescript"
       ],
       "rules": {
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "react/jsx-no-useless-fragment": "off",
+        "no-self-compare": "off"
       }
     },
     {
