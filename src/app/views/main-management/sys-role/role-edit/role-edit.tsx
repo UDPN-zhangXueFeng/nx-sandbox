@@ -1,11 +1,13 @@
 import useHook from '@/app/hooks/useHook';
-import { TreeDataNode, Form, Select, Tree } from 'antd';
+import { TreeDataNode, Form, Select, Tree, message } from 'antd';
 import { useState, useEffect, Key } from 'react';
 import styles from './role-edit.module.scss';
 import CTM from '@/app/core/components/CTM';
 import {
+  createRoleApi,
   getPermissionListApi,
-  getRoleInfoApi
+  getRoleInfoApi,
+  updateRoleApi
 } from '@/app/config/apis/management/role';
 
 type FieldType = {
@@ -21,33 +23,69 @@ enum RoleEditEnum {
   roleName = 'roleName',
   describes = 'describes',
   orgId = 'orgId',
-  menuIdList = 'menuIdList'
+  menuIdList = 'menuIdList',
+  getParameter = 'roleId'
 }
 
 /* eslint-disable-next-line */
 export interface RoleEditProps {}
 
 export function RoleEdit(props: RoleEditProps) {
-  const [treeData1, setTreeData1] = useState<TreeDataNode[]>([]);
-  const { t, query } = useHook(RoleEditEnum.locale);
-  const [form] = Form.useForm<FieldType>();
-  const onFinish = async (values: GlobalAny) => {
-    console.log(values);
 
-    // if (query.get('userId')) {
-    //   getRoleEditApi(values).then((res) => {
-    //     if (res.data.code !== 0) return;
-    //     message.success(t('PRO_Success').replace('****', t('ACT_Edit')));
-    //     routerPush(-1);
-    //   });
-    // } else {
-    //   getRoleSaveApi(values).then((res) => {
-    //     if (res.data.code !== 0) return;
-    //     message.success(t('PRO_Success').replace('****', t('ACT_NewAdd')));
-    //     routerPush(-1);
-    //   });
-    // }
+  const [treeData1, setTreeData1] = useState<TreeDataNode[]>([]);
+  const { t, query,routerPush } = useHook(RoleEditEnum.locale);
+  const [form] = Form.useForm<FieldType>();
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<
+    Key[] | { checked: Key[]; halfChecked: Key[] }
+  >([]);
+  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+
+  useEffect(() => {
+    getPermissionList();
+    if (query.get(RoleEditEnum.getParameter)) {
+      getUserInfo(query.get(RoleEditEnum.getParameter));
+    }
+  }, []);
+
+  const onFinish = async (values: GlobalAny) => {
+    if (query.get(RoleEditEnum.getParameter)) {
+      updateRoleApi({
+        menuIdList:values.menuIdList,
+        remarks: values.describes,
+        roleName:values.roleName,
+        status: values.status,
+        roleId: query.get('roleId')
+      }).then((res) => {
+        if (res.data.code !== 0) return;
+        message.success({
+          content: t('PRO_Success', { p: t('ACT_Edit') }),
+          duration: 2,
+          onClose: () => {
+            routerPush(-1);
+          }
+        });
+      });
+    } else {
+      createRoleApi({
+        menuIdList:values.menuIdList,
+        remarks: values.describes,
+        roleName:values.roleName,
+        status: values.status
+      }).then((res) => {
+        if (res.data.code !== 0) return;
+        message.success({
+          content: t('PRO_Success', { p: t('ACT_NewAdd') }),
+          duration: 2,
+          onClose: () => {
+            routerPush(-1);
+          }
+        })
+      });
+    }
   };
+
   const getPermissionList = async () => {
     const res = await getPermissionListApi({});
 
@@ -72,6 +110,7 @@ export function RoleEdit(props: RoleEditProps) {
       }
     });
   };
+
   const getUserInfo = async (roleId: GlobalAny) => {
     await getRoleInfoApi({
       roleId: Number(roleId)
@@ -84,19 +123,6 @@ export function RoleEdit(props: RoleEditProps) {
       form.setFieldValue(RoleEditEnum.menuIdList, res?.data?.menuIdList);
     });
   };
-  useEffect(() => {
-    getPermissionList();
-    if (query.get('roleId')) {
-      getUserInfo(query.get('roleId'));
-    }
-  }, []);
-
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
-  const [checkedKeys, setCheckedKeys] = useState<
-    Key[] | { checked: Key[]; halfChecked: Key[] }
-  >([]);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
   const onExpand = (expandedKeysValue: React.Key[]) => {
     setExpandedKeys(expandedKeysValue);
