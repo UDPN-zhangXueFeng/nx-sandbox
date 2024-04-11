@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-29 11:19:57
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 16:35:02
+ * @LastEditTime: 2024-04-11 13:29:12
  * @Description: 
  */
 import { ut_getLS } from '@bsnbase/utils';
@@ -41,7 +41,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
-    console.log(response);
+    // console.log(response);
     if(response.status ===  200 && !whitelist.includes(response.config.url)){
       if(response.data.code !== 0){
         return Promise.reject(response.data.message);

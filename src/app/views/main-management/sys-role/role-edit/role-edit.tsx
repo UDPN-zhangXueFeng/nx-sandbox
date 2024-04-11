@@ -31,9 +31,8 @@ enum RoleEditEnum {
 export interface RoleEditProps {}
 
 export function RoleEdit(props: RoleEditProps) {
-
   const [treeData1, setTreeData1] = useState<TreeDataNode[]>([]);
-  const { t, query,routerPush } = useHook(RoleEditEnum.locale);
+  const { t, query, routerPush } = useHook(RoleEditEnum.locale);
   const [form] = Form.useForm<FieldType>();
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [checkedKeys, setCheckedKeys] = useState<
@@ -52,9 +51,9 @@ export function RoleEdit(props: RoleEditProps) {
   const onFinish = async (values: GlobalAny) => {
     if (query.get(RoleEditEnum.getParameter)) {
       updateRoleApi({
-        menuIdList:values.menuIdList,
+        menuIdList: values.menuIdList,
         remarks: values.describes,
-        roleName:values.roleName,
+        roleName: values.roleName,
         status: values.status,
         roleId: query.get('roleId')
       }).then((res) => {
@@ -69,9 +68,9 @@ export function RoleEdit(props: RoleEditProps) {
       });
     } else {
       createRoleApi({
-        menuIdList:values.menuIdList,
+        menuIdList: values.menuIdList,
         remarks: values.describes,
-        roleName:values.roleName,
+        roleName: values.roleName,
         status: values.status
       }).then((res) => {
         if (res.data.code !== 0) return;
@@ -81,7 +80,7 @@ export function RoleEdit(props: RoleEditProps) {
           onClose: () => {
             routerPush(-1);
           }
-        })
+        });
       });
     }
   };
@@ -115,7 +114,7 @@ export function RoleEdit(props: RoleEditProps) {
     await getRoleInfoApi({
       roleId: Number(roleId)
     }).then((res) => {
-      setCheckedKeys(res.data.data.menuIdList);
+      setCheckedKeys(res.data.data.menuIdList as React.Key[]);
       res = res.data;
       form.setFieldValue(RoleEditEnum.roleName, res?.data?.roleName);
       form.setFieldValue(RoleEditEnum.describes, res?.data?.describes);
