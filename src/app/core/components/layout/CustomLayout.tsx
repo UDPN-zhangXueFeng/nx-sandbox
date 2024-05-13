@@ -2,7 +2,7 @@
  * @Author: W·S
  * @Date: 2023-11-14 11:28:47
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-11 13:58:14
+ * @LastEditTime: 2024-05-09 10:57:52
  * @Description: Description
  */
 
@@ -26,7 +26,7 @@ const CustomLayout = () => {
   const location = useLocation();
 
   return (
-    <ConfigProvider theme={useAppSelector((state) => state.themeSlice.theme)}>
+    <ConfigProvider theme={useAppSelector((state) => state.themeSlice.theme) || []}>
       <Layout
         style={{ backgroundColor: token.colorBgContainer }}
         className="h-full w-full "

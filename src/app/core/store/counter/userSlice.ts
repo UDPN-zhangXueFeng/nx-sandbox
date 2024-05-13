@@ -2,8 +2,8 @@
  * @Author: zhangxuefeng
  * @Date: 2024-04-07 13:25:10
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 16:38:45
- * @Description: 
+ * @LastEditTime: 2024-05-09 11:02:37
+ * @Description:
  */
 import { createReduxFunction } from '@/app/hooks/reduxHook';
 import { ut_setLS } from '@bsnbase/utils';
@@ -13,17 +13,16 @@ interface dataType {
   userName: string;
   orgName: string;
   token: string;
-  limit: string[];
-
+  limit: GlobalAny[];
 }
 const userSlice = createSlice({
   name: 'information',
   initialState: <dataType>{
     userInfo: '',
-    userName:'',
-    orgName:'',
-    token:'',
-    limit:[]
+    userName: '',
+    orgName: '',
+    token: '',
+    limit: []
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -31,7 +30,9 @@ const userSlice = createSlice({
       state.userName = action.payload.userName;
       state.orgName = action.payload.orgName;
       state.token = action.payload.token;
-      state.limit = action.payload.menuKeyList.map((item:GlobalAny)=>item.menuKey);
+      state.limit = action.payload.menuKeyList.map(
+        (item: GlobalAny) => item.menuId
+      );
       ut_setLS('token', action.payload.token);
     }
   }

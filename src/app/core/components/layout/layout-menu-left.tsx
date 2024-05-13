@@ -226,7 +226,7 @@ const LayOutMenuLeft = () => {
               color: token.colorPrimary
             }}
           >
-            {useAppSelector((state) => state.userSlice.orgName)}
+            {useAppSelector((state) => state.userSlice.orgName) || []}
           </div>
         </center>
 

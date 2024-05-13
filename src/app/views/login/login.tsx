@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 16:37:52
+ * @LastEditTime: 2024-05-09 11:02:52
  * @Description:
  */
 import { captchaApi, loginApi } from '@/app/config/apis/login';
@@ -25,8 +25,8 @@ enum LogEnum {
   imgPath1 = '/static/login/img/login-1.png',
   routerPath = 'main/management/system-management/role',
   initValName = 'centraltest',
-  initValPassword = '123456'
-  // routerPath = '/main/dashboard/dashboard'
+  initValPassword = '123456',
+  // routerPath = 'main/dashboard/dashboard'
 }
 
 let randomstr = '';

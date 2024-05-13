@@ -4,7 +4,7 @@ import { request } from '@/app/core/https';
  * @Author: zhangxuefeng
  * @Date: 2024-04-08 10:52:48
  * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-09 14:52:48
+ * @LastEditTime: 2024-05-09 10:46:14
  * @Description:
  */
 enum RoleApi{
@@ -15,6 +15,7 @@ enum RoleApi{
   getPermissionList = '/api/rbac/v1/sys/menu/queryAllMenu', // 获取权限列表
   getRoleInfo = '/api/rbac/v1/sys/role/getRole',// 获取权限信息
   createRole = '/api/rbac/v1/sys/role/save', // 创建角色
+  // TODO:description 字段提交后，再次进入编辑页面，description 没有回显
   updateRole = '/api/rbac/v1/sys/role/update' // 修改角色
 }
 export const getRoleUpdateStatusApi: AxiosRequest<
