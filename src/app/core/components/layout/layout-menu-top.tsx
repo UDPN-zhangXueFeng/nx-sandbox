@@ -1,31 +1,32 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Layout, Divider, Space, Button, Breadcrumb, Dropdown } from 'antd';
+import { BellOutlined, DownOutlined } from '@ant-design/icons';
+import { Layout, Divider, Space, Button, Breadcrumb, Dropdown, Badge } from 'antd';
 import { t } from 'i18next';
 import { NavLink, useMatches } from 'react-router-dom';
 import { token, userInfo } from '../../store/counter/userSlice';
 import { useAppSelector } from '@/app/hooks/reduxHook';
 import { useToken } from '@ant-design/pro-provider';
 import { useEffect, useMemo, useState } from 'react';
+import { ut_getLS } from '@bsnbase/utils';
 
-export const LayOutMenuTop = () => {
-  const [bankTitle, setBankTitle] = useState('');
+export const LayOutMenuTop = (props: {
+  className?: string | undefined;
+}) => {
   const primary = useAppSelector(
     (state) => state.themeSlice.theme.token.colorPrimary
   );
   const { token } = useToken();
   const matches = useMatches();
-  useEffect(() => {
-    setBankTitle('(Central Bank Version)');
-  }, []);
   const breadItems = useMemo(() => {
     const crumbs = matches.filter((match: GlobalAny) =>
       Boolean(match.data?.limit)
     );
     return crumbs;
   }, [matches]);
+  const userName: string = JSON.parse(JSON.parse(ut_getLS('persist:root')).userSlice).userName;
   return (
     <>
       <Layout.Header
+        className={props.className}
         style={{
           backgroundColor: token.colorBgContainer,
           height: 'auto',
@@ -36,7 +37,7 @@ export const LayOutMenuTop = () => {
           style={{
             backgroundColor: primary
           }}
-          className="bg-[#4f5f7c] text-white  px-8 w-full flex items-center justify-between h-20 rounded-2xl"
+          className="bg-[#4f5f7c] text-white  px-8 w-full flex items-center justify-between h-20"
         >
           <div className="flex flex-1 items-center justify-between">
             <div
@@ -48,77 +49,14 @@ export const LayOutMenuTop = () => {
                 alt=""
                 className="w-[8.5rem] h-[4.0625rem]"
               />
-              <Divider
-                type="vertical"
-                className="border-[0.1875rem] border-[#183673] h-6 hidden xl:block"
-              />
-              <div className="flex  justify-start flex-col xxl:flex-row">
-                <span
-                  className="text-[#183673] text-[1rem]  xxl:text-[1.8rem] font-[800] hidden xl:block xl:text-[1.4rem] h-[1.875rem]"
-                  style={{
-                    color: token.colorBgContainer
-                  }}
-                >
+              <div className="flex justify-start items-center flex-col xxl:flex-row">
                   {t('OS_P000')}
-                </span>
-                <span
-                  className="text-[#183673] mt-[0.3125rem] text-[0.8rem] xxl:text-[1.3rem] ml-2"
-                  style={{
-                    color: token.colorBgContainer
-                  }}
-                >
-                  {bankTitle}
-                </span>
               </div>
             </div>
-            <div>
-              <div className="mr-[20px]">
-                <Space size={'large'}>
-                  <span className="text-[0.875rem] text-white cursor-not-allowed">
-                    User Manual
-                  </span>
-                  <Button
-                    type="link"
-                    className="text-[0.875rem] text-white"
-                    onClick={() =>
-                      window.open(
-                        '/UDPN AII-in-One Digital Currency Sandbox OpenAPI.pdf'
-                      )
-                    }
-                  >
-                    OpenAPIs
-                  </Button>
-                  <span className="text-[0.875rem] text-white cursor-not-allowed">
-                    Technical Support
-                  </span>
-                </Space>
-              </div>
-              <Breadcrumb
-                items={breadItems
-                  .filter(
-                    (_item, _index) =>
-                      (breadItems.length > 1 && _index > 0) ||
-                      breadItems.length === 1
-                  )
-                  .map((_item) => {
-                    return {
-                      title: (
-                        <NavLink
-                          key={_item.pathname}
-                          to={`${_item.pathname}`}
-                          className="text-lg font-bold !text-white"
-                        >
-                          {t(
-                            (_item.data as { limit: string; label?: string })
-                              ?.label ??
-                              (_item.data as { limit: string; label?: string })
-                                .limit
-                          )}
-                        </NavLink>
-                      )
-                    };
-                  })}
-              />
+            <div className="mt-3 mr-12">
+              <Badge count={100}>
+                <BellOutlined className="text-white" style={{'fontSize': '30px'}} />
+              </Badge>
             </div>
           </div>
           {/* <CustomButton
@@ -160,7 +98,7 @@ export const LayOutMenuTop = () => {
                   className="w-[2.5rem] mt-6"
                   alt=""
                 />
-                <span className="text-white">{'11111'}</span>
+                <span className="text-white">{userName}</span>
                 <DownOutlined className="text-white" />
               </Space>
               {/* </a> */}

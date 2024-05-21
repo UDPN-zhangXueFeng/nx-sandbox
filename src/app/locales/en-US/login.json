@@ -1,12 +1,12 @@
 {
   "login_0001": " Interoperable Payment Infrastructure For The Digital Currencie Of Tomorrow",
-  "login_0002": "UDPN All-in-One Digital Currency Sandbox",
+  "login_0002": "IDA Stablecoin Management Platform",
   "login_0003": "Central Bank Version",
   "login_0004": "Choose a role to sign in to the system",
   "login_0005": "Central Bank",
   "login_0006": "Commercial Bank",
-  "login_0007": "USERNAME",
-  "login_0008": "PASSWORD",
-  "login_0009": "CAPTCHA",
-  "login_0010": "Log in"
+  "login_0007": "Username",
+  "login_0008": "Password",
+  "login_0009": "Captcha",
+  "login_0010": "Sign in"
 }

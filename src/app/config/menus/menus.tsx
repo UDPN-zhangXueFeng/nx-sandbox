@@ -1,16 +1,25 @@
 import {
   AppstoreOutlined,
   BarChartOutlined,
+  CheckSquareOutlined,
   DashboardOutlined,
   DatabaseOutlined,
-  DesktopOutlined
+  DesktopOutlined,
+  FileMarkdownOutlined,
+  FileSearchOutlined,
+  FundProjectionScreenOutlined,
+  IdcardOutlined,
+  MacCommandOutlined,
+  SettingOutlined,
+  UserOutlined,
+  WalletOutlined
 } from '@ant-design/icons';
 
 /*
  * @Author: zhangxuefeng
  * @Date: 2024-04-07 15:48:28
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 09:44:54
+ * @LastEditors: chenyuting
+ * @LastEditTime: 2024-05-20 15:34:41
  * @Description:
  */
 export interface MenusType {
@@ -27,70 +36,99 @@ export const MENUS = [
     label: 'Dashboard',
     path: '/main/dashboard/dashboard',
     orgKey: 1,
-    icon: <DashboardOutlined />
-  },
-  {
-    label: 'Dashboard',
-    path: '/main/dashboard/mdashboard',
-    orgKey: 2,
-    icon: <DashboardOutlined />
-  },
-  {
-    label: 'Currency Definitions',
-    path: '/main/dashboard/currencyDefinitions',
-    orgKey: 41,
-    icon: <DashboardOutlined />
-  },
-  {
-    label: 'Currency Definitions',
-    path: '/main/dashboard/currencyDefinitions1',
-    orgKey: 43,
-    icon: <DashboardOutlined />
-  },
-  {
-    label: 'To Do List',
-    path: '/main/dashboard/mTodoList',
-    orgKey: 42,
-    icon: <DashboardOutlined />
+    icon: <AppstoreOutlined />
   },
   {
     label: 'To Do List',
     path: '/main/dashboard/todoList',
-    orgKey: 45,
-    icon: <DashboardOutlined />
-  }
-];
-export const MENUS_MAN = [
+    orgKey: 42,
+    icon: <CheckSquareOutlined />
+  },
   {
-    label: 'FSP Onboarding',
-    path: '/main/management/fsp-management',
+    label: 'SP Management',
+    path: '/main/sp/sp-management',
     orgKey: 40,
-    icon: <BarChartOutlined />
+    icon: <FileMarkdownOutlined />,
+    children: [
+      {
+        label: 'Onboarding Management',
+        path: '/main/sp/sp-management/onboarding'
+      },
+      {
+        label: 'SP Management',
+        path: '/main/sp/sp-management/sp'
+      }
+    ]
   },
   {
-    label: 'Business Activation View',
-    path: '/main/management/business',
+    label: 'Stablecoin Administration',
+    path: '/main/stablecoin/stablecoin-admin',
     orgKey: 28,
-    icon: <DatabaseOutlined />
+    icon: <MacCommandOutlined />
   },
   {
-    label: 'System Log',
+    label: 'Wallet Management',
+    path: '/main/wallet/wallet-management',
+    orgKey: 29,
+    icon: <WalletOutlined />,
+    children: [
+      {
+        label: 'Whitelist Management',
+        path: '/main/wallet/wallet-management/whitelist'
+      },
+      {
+        label: 'User Wallet Management',
+        path: '/main/wallet/wallet-management/user'
+      }
+    ]
+  },
+  {
+    label: 'Control & Monitoring',
     path: '/main/management/system-log',
     orgKey: 29,
-    icon: <AppstoreOutlined />
+    icon: <FundProjectionScreenOutlined />,
+    children: [
+      {
+        label: 'Rule Settings',
+        path: '/main/control/control-monitoring/rule'
+      },
+      {
+        label: 'Suspicious Activity List',
+        path: '/main/control/control-monitoring/suspicious'
+      }
+    ]
   },
-
   {
-    label: 'Statistics',
-    path: '/main/management/statistics',
+    label: 'Audit & Report',
+    path: '/main/audit/audit-report',
     orgKey: 30,
-    icon: <BarChartOutlined />
+    icon: <FileSearchOutlined />
+  },
+  {
+    label: 'System Settings',
+    path: '/main/settings/system-settings',
+    orgKey: 29,
+    icon: <SettingOutlined />,
+    children: [
+      {
+        label: 'Node Management',
+        path: '/main/settings/system-settings/node'
+      },
+      {
+        label: 'Workflow Management',
+        path: '/main/settings/system-settings/workflow'
+      },
+      {
+        label: 'Smart Contract Management',
+        path: '/main/settings/system-settings/contract'
+      }
+    ]
   },
   {
     label: 'System Management',
     path: '/main/management/system-management',
     orgKey: 31,
-    icon: <DesktopOutlined />,
+    icon: <UserOutlined />,
     children: [
       {
         label: 'User Management',

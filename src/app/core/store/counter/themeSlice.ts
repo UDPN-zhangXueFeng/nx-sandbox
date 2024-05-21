@@ -1,9 +1,9 @@
 /*
  * @Author: zhangxuefeng
  * @Date: 2024-04-07 13:25:10
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-08 16:35:30
- * @Description: 
+ * @LastEditors: chenyuting
+ * @LastEditTime: 2024-05-20 13:43:32
+ * @Description:
  */
 import { createReduxFunction } from '@/app/hooks/reduxHook';
 import { createSlice } from '@reduxjs/toolkit';
@@ -13,8 +13,8 @@ const themeSlice = createSlice({
   initialState: {
     theme: {
       token: {
-        colorPrimary: '#077ff5',
-        colorBgContainer:'#ffffff'
+        colorPrimary: '#63A1D0',
+        colorBgContainer: '#fff'
       }
     }
   },

@@ -1,11 +1,12 @@
 /*
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-05-09 11:02:52
+ * @LastEditors: chenyuting
+ * @LastEditTime: 2024-05-20 17:23:28
  * @Description:
  */
 import { captchaApi, loginApi } from '@/app/config/apis/login';
+import { setTheme } from '@/app/core/store/counter/themeSlice';
 import { setUserInfo } from '@/app/core/store/counter/userSlice';
 
 import { useAppDispatch } from '@/app/hooks/reduxHook';
@@ -26,6 +27,7 @@ enum LogEnum {
   routerPath = 'main/management/system-management/role',
   initValName = 'centraltest',
   initValPassword = '123456',
+  themeColor = '#63A1D0',
   // routerPath = 'main/dashboard/dashboard'
 }
 
@@ -71,130 +73,111 @@ export function Login(props: LoginProps) {
       if (res.data.code === 0) {
         dispatch(setUserInfo(res.data.data));
         routerPush(LogEnum.routerPath);
+        dispatch(
+          setTheme({
+            token: {
+              colorPrimary: LogEnum.themeColor
+            }
+          })
+        );
       }
     });
   };
 
   return (
-    <div className="flex justify-between items-center h-screen">
-      <div className=" flex-1 h-full bg-gradient-to-b from-[#BAE4F0] to-[#116BA8] flex flex-col justify-center items-center space-y-7">
+    <>
+      <div className={`bg-[${LogEnum.themeColor}] flex justify-start items-center h-20 pl-4 fixed w-full`}>
         <div>
-          <img src={LogEnum.imgPath} alt="" />
+          <img className="w-[8.5rem] h-[4.0625rem]" src={LogEnum.imgPath} alt="" />
         </div>
-        <div className="text-[1.625rem] text-[#183673] font-[600] w-[36rem] ">
-          <div className="text-cneter leading-10">{t('login_0001')}</div>
-        </div>
-        <div>
-          <img
-            src={LogEnum.imgPath1}
-            className="w-[40.875rem] h-[37.0625rem]"
-            alt=""
-          />
-        </div>
+        <div className="text-white ml-10 text-[2rem] font-bold">{t('login_0002')}</div>
       </div>
-      <div className="flex-1 justify-center items-center space-y-7 flex flex-col">
-        <div className="text-[#097FF5] font-[800] text-[2.125rem] w-[36rem] leading-[2.875rem]">
-          <div className="text-center">{t('login_0002')}</div>
+      <div className="flex justify-between items-center h-screen">
+        <div className=" flex-1 flex flex-col justify-center items-center space-y-7">
+         <img className="w-full h-screen" src={LogEnum.imgPath1} alt="" />
         </div>
-        <div className="font-[500] leading-[2.4375rem] text-[#0A1629] text-[1.625rem]">
-          {t('login_0003')}
-        </div>
-        <div className="logoIcon">
-          <Form
-            form={form}
-            name="basic"
-            layout="vertical"
-            style={{ width: '28rem' }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            autoComplete="off"
-            className="custom"
-          >
-            <Form.Item
-              label={t('login_0004')}
-              name="type"
-              initialValue={'5'}
-              rules={[
-                {
-                  required: true
-                }
-              ]}
+        <div className="flex-1 justify-center items-center space-y-12 flex flex-col">
+          <div className="text-[#000000] font-[800] text-[1.625rem] w-[36rem] leading-[2.875rem]">
+            <div className="text-center">{t('login_0002')}</div>
+          </div>
+          <div className="logoIcon">
+            <Form
+              form={form}
+              name="basic"
+              layout="vertical"
+              style={{ width: '28rem' }}
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              autoComplete="off"
+              className="custom"
             >
-              <Radio.Group>
-                <Radio value="5"> {t('login_0005')} </Radio>
-                <Radio value="10" className="ml-6">
-                  {t('login_0006')}
-                </Radio>
-                {/* <Radio value="1" className="ml-6">
-                    operations
-                  </Radio> */}
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item<FieldType>
-              label={t('login_0007')}
-              name={LogEnum.username}
-              initialValue={LogEnum.initValName}
-              rules={[
-                {
-                  required: true,
-                  message: t('pub_00001', { name: LogEnum.username })
-                }
-              ]}
-            >
-              <Input addonAfter={<MailOutlined />} size="large" />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label={t('login_0008')}
-              initialValue={LogEnum.initValPassword}
-              name={LogEnum.password}
-              rules={[
-                {
-                  required: true,
-                  message: t('pub_00001', { name: LogEnum.password })
-                }
-              ]}
-            >
-              <Input.Password addonAfter={<KeyOutlined />} size="large" />
-            </Form.Item>
-            <Form.Item<FieldType>
-              label={t('login_0009')}
-              name={LogEnum.captcha}
-              rules={[
-                {
-                  required: true,
-                  message: t('pub_00001', { name: LogEnum.captcha })
-                }
-              ]}
-            >
-              <Space direction="vertical" size="middle" className="w-full">
-                <Space.Compact className="w-full">
-                  <Input size="large" />
-                  <img
-                    src={value}
-                    alt=""
-                    className="cursor-pointer"
-                    onClick={() => fetchCaptcha()}
-                  />
-                </Space.Compact>
-              </Space>
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="w-full mt-[3.125rem]"
-                size="large"
-                loading={loadings}
+              <Form.Item<FieldType>
+                label={t('login_0007')}
+                name={LogEnum.username}
+                initialValue={LogEnum.initValName}
+                rules={[
+                  {
+                    required: true,
+                    message: t('pub_00001', { name: LogEnum.username })
+                  }
+                ]}
               >
-                {t('login_0010')}
-              </Button>
-            </Form.Item>
-          </Form>
+                <Input size="large" />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                label={t('login_0008')}
+                initialValue={LogEnum.initValPassword}
+                name={LogEnum.password}
+                rules={[
+                  {
+                    required: true,
+                    message: t('pub_00001', { name: LogEnum.password })
+                  }
+                ]}
+              >
+                <Input.Password size="large" />
+              </Form.Item>
+              <Form.Item<FieldType>
+                label={t('login_0009')}
+                name={LogEnum.captcha}
+                rules={[
+                  {
+                    required: true,
+                    message: t('pub_00001', { name: LogEnum.captcha })
+                  }
+                ]}
+              >
+                <Space direction="vertical" size="middle" className="w-full">
+                  <Space.Compact className="w-full">
+                    <Input size="large" />
+                    <img
+                      src={value}
+                      alt=""
+                      className="cursor-pointer"
+                      onClick={() => fetchCaptcha()}
+                    />
+                  </Space.Compact>
+                </Space>
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className={`bg-[${LogEnum.themeColor}] w-full mt-[3.125rem] `}
+                  size="large"
+                  loading={loadings}
+                >
+                  {t('login_0010')}
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
+   
   );
 }
 

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MENUS, MenusType, NOPush, MENUS_MAN } from '@/app/config/menus/menus';
+import { MENUS, MenusType, NOPush } from '@/app/config/menus/menus';
 import type { CollapseProps, MenuProps } from 'antd';
-import { Layout, Menu, theme, Typography } from 'antd';
+import { Divider, Layout, Menu, theme, Typography } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ut_getLS } from '@bsnbase/utils';
-
 import useHook from '@/app/hooks/useHook';
 import { useAppSelector } from '@/app/hooks/reduxHook';
+import { setUserInfo } from '../../store/counter/userSlice';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { Title, Paragraph } = Typography;
@@ -27,8 +27,10 @@ function getItem(
   } as MenuItem;
 }
 const { useToken } = theme;
-const LayOutMenuLeft = () => {
-  const { t } = useHook();
+const LayOutMenuLeft = (props: {
+  className?: string | undefined;
+}) => {
+  const { t } = useHook('common');
   const [showStatus, setShowStatus] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -66,118 +68,7 @@ const LayOutMenuLeft = () => {
     },
     [navigate]
   );
-  useEffect(() => {
-    if (ut_getLS('orgType') === '5') {
-      setShowStatus(true);
-    }
-    if (ut_getLS('orgType') === '10') {
-      setShowStatus(true);
-    }
-    if (ut_getLS('orgType') === '1') {
-      setShowStatus(false);
-    }
-  }, []);
-  useEffect(() => {
-    const actPath = pathname.split('/');
-    let openKey = '';
-    if (
-      actPath[2] === 'digital' ||
-      actPath[2] === 'traditional' ||
-      actPath[3] === 'system-management'
-    ) {
-      openKey = '/main/' + actPath[2] + '/' + actPath[3];
-    }
-    if (
-      actPath[3] === 'distributed' ||
-      actPath[4] === 'wallet-management' ||
-      actPath[4] === 'transaction-record' ||
-      actPath[4] === 'wallet-commercial' ||
-      actPath[4] === 'remittance'
-    ) {
-      openKey = '/main/' + actPath[2] + '/' + actPath[3] + '/' + actPath[4];
-    }
-    if (
-      actPath[5] === 'rcbdc-mgt' ||
-      actPath[5] === 'wallet-mgt' ||
-      actPath[5] === 'rcbdc-data' ||
-      actPath[5] === 'rcbdc-statisics'
-    ) {
-      openKey =
-        '/main/' +
-        actPath[2] +
-        '/' +
-        actPath[3] +
-        '/' +
-        actPath[4] +
-        '/' +
-        actPath[5];
-    }
-
-    let _current = '';
-    if (pathname === 'main') {
-      _current = '/main';
-    }
-    if (actPath[2] === 'dashboard' || actPath[2] === 'management') {
-      _current = '/main/' + actPath[2] + '/' + actPath[3];
-    }
-    if (
-      actPath[2] === 'digital' ||
-      actPath[2] === 'traditional' ||
-      actPath[3] === 'system-management'
-    ) {
-      _current = '/main/' + actPath[2] + '/' + actPath[3] + '/' + actPath[4];
-    }
-    if (
-      actPath[3] === 'distributed' ||
-      actPath[4] === 'wallet-management' ||
-      actPath[4] === 'transaction-record' ||
-      actPath[4] === 'wallet-commercial' ||
-      actPath[4] === 'remittance'
-    ) {
-      _current =
-        '/main/' +
-        actPath[2] +
-        '/' +
-        actPath[3] +
-        '/' +
-        actPath[4] +
-        '/' +
-        actPath[5];
-    }
-    if (
-      actPath[5] === 'rcbdc-mgt' ||
-      actPath[5] === 'wallet-mgt' ||
-      actPath[5] === 'rcbdc-data' ||
-      actPath[5] === 'rcbdc-statisics'
-    ) {
-      _current =
-        '/main/' +
-        actPath[2] +
-        '/' +
-        actPath[3] +
-        '/' +
-        actPath[4] +
-        '/' +
-        actPath[5] +
-        '/' +
-        actPath[6];
-    }
-
-    if (pathname.includes('tokenized')) {
-      setActiveKey('1');
-    } else if (pathname.includes('distributed')) {
-      setActiveKey('2');
-    } else if (pathname.includes('wholesale')) {
-      setActiveKey('3');
-    }
-
-    setOpenKeys([openKey]);
-    setCurrent([_current]);
-  }, [pathname]);
-
-  const userInfo = ut_getLS('userInfo');
   const { token } = useToken();
-
   const convertToAntMenuData = useCallback(
     (items: MenusType[]): MenuItem[] => {
       return items.map((item) => {
@@ -202,14 +93,15 @@ const LayOutMenuLeft = () => {
   const antMenuData: MenuProps['items'] = convertToAntMenuData(MENUS).filter(
     (item) => item !== null
   );
-  const manageMenuData: MenuProps['items'] = convertToAntMenuData(
-    MENUS_MAN
-  ).filter((item: any) => item !== null);
+  // const manageMenuData: MenuProps['items'] = convertToAntMenuData(
+  //   MENUS_MAN
+  // ).filter((item: any) => item !== null);
+  const userName: string = JSON.parse(JSON.parse(ut_getLS('persist:root')).userSlice).userName;
   return (
     <Layout.Sider
       theme="light"
-      style={{ height: 'calc(100vh - 6rem)' }}
-      className={'overflow-y-auto px-4'}
+      style={{ height: 'calc(100vh - 5rem)' }}
+      className={'overflow-y-auto px-4' + props.className}
       breakpoint="xl"
       width="20.125rem"
       collapsedWidth="20.125rem"
@@ -217,19 +109,15 @@ const LayOutMenuLeft = () => {
       collapsible
       collapsed={false}
     >
-      <div className="transition-all py-3">
+      <div className="transition-all py-5">
         <center>
           <div
-            className="text-theme break-all font-[700] text-[24px] py-2"
-            style={{
-              textShadow: token.colorInfo + ' 0.2rem 0.4rem 0.6rem',
-              color: token.colorPrimary
-            }}
+            className="text-theme break-all font-bold py-2"
           >
-            {useAppSelector((state) => state.userSlice.orgName) || []}
+            {t('OS_P001', { key: userName })}
           </div>
         </center>
-
+        <Divider />
         <Menu
           className="!border-0 w-full setTheme"
           mode="inline"
@@ -238,16 +126,6 @@ const LayOutMenuLeft = () => {
           onOpenChange={setOpenKeys}
           selectedKeys={current}
           items={antMenuData}
-        />
-        <i className="font-bold text-lg">Sandbox Management</i>
-        <Menu
-          className="!border-0 w-full setTheme"
-          mode="inline"
-          onClick={onClick}
-          openKeys={openKeys}
-          onOpenChange={setOpenKeys}
-          selectedKeys={current}
-          items={manageMenuData}
         />
       </div>
     </Layout.Sider>
