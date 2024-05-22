@@ -8,11 +8,11 @@ export default defineConfig({
       cypressDir: 'src',
       bundler: 'vite',
       webServerCommands: {
-        default: 'nx run sandbox:serve',
-        production: 'nx run sandbox:preview',
+        default: 'nx run ida:serve',
+        production: 'nx run ida:preview'
       },
-      ciWebServerCommand: 'nx run sandbox:serve-static',
+      ciWebServerCommand: 'nx run ida:serve-static'
     }),
-    baseUrl: 'http://localhost:4200',
-  },
+    baseUrl: 'http://localhost:4200'
+  }
 });

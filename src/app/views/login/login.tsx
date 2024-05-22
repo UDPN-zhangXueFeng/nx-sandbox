@@ -2,7 +2,7 @@
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 10:05:39
  * @LastEditors: chenyuting
- * @LastEditTime: 2024-05-20 17:23:28
+ * @LastEditTime: 2024-05-22 16:35:57
  * @Description:
  */
 import { captchaApi, loginApi } from '@/app/config/apis/login';
@@ -86,7 +86,7 @@ export function Login(props: LoginProps) {
 
   return (
     <>
-      <div className={`bg-[${LogEnum.themeColor}] flex justify-start items-center h-20 pl-4 fixed w-full`}>
+      <div className={`flex justify-start items-center h-20 pl-4 fixed w-full`} style={{backgroundColor: LogEnum.themeColor}}>
         <div>
           <img className="w-[8.5rem] h-[4.0625rem]" src={LogEnum.imgPath} alt="" />
         </div>
@@ -165,7 +165,8 @@ export function Login(props: LoginProps) {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className={`bg-[${LogEnum.themeColor}] w-full mt-[3.125rem] `}
+                  style={{backgroundColor: LogEnum.themeColor}}
+                  className={`w-full mt-[3.125rem] `}
                   size="large"
                   loading={loadings}
                 >

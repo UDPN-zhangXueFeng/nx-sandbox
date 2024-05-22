@@ -99,36 +99,42 @@ const LayOutMenuLeft = (props: {
   const userName: string = JSON.parse(JSON.parse(ut_getLS('persist:root')).userSlice).userName;
   return (
     <Layout.Sider
-      theme="light"
-      style={{ height: 'calc(100vh - 5rem)' }}
-      className={'overflow-y-auto px-4' + props.className}
-      breakpoint="xl"
-      width="20.125rem"
-      collapsedWidth="20.125rem"
-      trigger={null}
-      collapsible
-      collapsed={false}
-    >
-      <div className="transition-all py-5">
-        <center>
-          <div
-            className="text-theme break-all font-bold py-2"
-          >
-            {t('OS_P001', { key: userName })}
-          </div>
-        </center>
-        <Divider />
-        <Menu
-          className="!border-0 w-full setTheme"
-          mode="inline"
-          onClick={onClick}
-          openKeys={openKeys}
-          onOpenChange={setOpenKeys}
-          selectedKeys={current}
-          items={antMenuData}
-        />
-      </div>
-    </Layout.Sider>
+        theme="light"
+        style={{ height: 'calc(100vh - 5rem)' }}
+        className={'overflow-y-auto px-4'}
+        breakpoint="xl"
+        width="20.125rem"
+        collapsedWidth="20.125rem"
+        trigger={null}
+        collapsible
+        collapsed={false}
+      >
+        <div className="transition-all py-5">
+          {/* <center>
+            <h2 className="text-theme">{t('OS_P000')}</h2>
+          </center> */}
+          <center>
+            <div
+              className="text-theme break-all font-bold py-2"
+            >
+              {t('OS_P001', { key: userName })}
+            </div>
+            {/* <p className="text-[#60a3ce]">
+              {'Hello ' + JSON.parse(userInfo)['userName'] + ' !'}
+            </p> */}
+          </center>
+          <Divider />
+          <Menu
+            className="!border-0 w-full setTheme"
+            mode="inline"
+            onClick={onClick}
+            openKeys={openKeys}
+            onOpenChange={setOpenKeys}
+            selectedKeys={current}
+            items={antMenuData}
+          />
+        </div>
+      </Layout.Sider>
   );
 };
 

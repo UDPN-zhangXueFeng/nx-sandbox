@@ -2,7 +2,7 @@
  * @Author: W·S
  * @Date: 2023-11-14 11:28:47
  * @LastEditors: chenyuting
- * @LastEditTime: 2024-05-21 09:49:29
+ * @LastEditTime: 2024-05-22 16:43:44
  * @Description: Description
  */
 
@@ -26,21 +26,23 @@ const CustomLayout = () => {
   const location = useLocation();
 
   return (
-    <ConfigProvider theme={useAppSelector((state) => state.themeSlice.theme) || []}>
+    <ConfigProvider
+      theme={useAppSelector((state) => state.themeSlice.theme) || []}
+    >
       <Layout
-        style={{ backgroundColor: token.colorBgContainer }}
-        className="h-full w-full "
+        style={{ backgroundColor: token.colorBgContainer}}
+        className="h-full w-full"
       >
-         {<LayOutMenuTop className="fixed h-20 w-full z-50" />}
+        {<LayOutMenuTop />}
         <Layout
           hasSider
-          className="flex flex-col mt-20"
+          className="flex flex-col "
           style={{ backgroundColor: token.colorBgLayout }}
         >
-          <div
+         <div
             className="overflow-hidden bg-white h-full"
           >
-            <LayOutMenuLeft className="relative" />
+            <LayOutMenuLeft />
           </div>
 
           <Layout.Content

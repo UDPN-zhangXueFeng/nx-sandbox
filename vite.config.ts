@@ -1,8 +1,8 @@
 /*
  * @Author: zhangxuefeng
  * @Date: 2024-03-27 09:39:12
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-11 13:26:47
+ * @LastEditors: chenyuting
+ * @LastEditTime: 2024-05-22 17:40:27
  * @Description:
  */
 /// <reference types='vitest' />
@@ -46,7 +46,7 @@ export default defineConfig({
   // },
 
   build: {
-    outDir: './dist/sandbox',
+    outDir: './dist/ida',
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true
@@ -63,7 +63,7 @@ export default defineConfig({
 
     reporters: ['default'],
     coverage: {
-      reportsDirectory: './coverage/sandbox',
+      reportsDirectory: './coverage/ida',
       provider: 'v8'
     }
   },
