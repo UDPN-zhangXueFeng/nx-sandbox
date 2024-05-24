@@ -1,16 +1,19 @@
 import {
   AppstoreOutlined,
   BarChartOutlined,
+  BlockOutlined,
   CheckSquareOutlined,
   DashboardOutlined,
   DatabaseOutlined,
   DesktopOutlined,
+  DownSquareOutlined,
   FileMarkdownOutlined,
   FileSearchOutlined,
   FundProjectionScreenOutlined,
   IdcardOutlined,
   MacCommandOutlined,
   SettingOutlined,
+  SlidersOutlined,
   UserOutlined,
   WalletOutlined
 } from '@ant-design/icons';
@@ -25,6 +28,7 @@ import {
 export interface MenusType {
   label: string | React.ReactNode;
   path?: string | null;
+  link?: string | null;
   icon?: React.ReactNode;
   type?: 'group';
   orgKey?: number;
@@ -139,5 +143,39 @@ export const MENUS = [
         path: '/main/management/system-management/role'
       }
     ]
-  }
+  },
+  {
+    label: 'Mint & Redeem Management',
+    path: '/main/mintRedeem/mint-redeem',
+    orgKey: 31,
+    icon: <FundProjectionScreenOutlined />,
+    children: [
+      {
+        label: 'Mint Application Management',
+        path: '/main/mintRedeem/mint-redeem/mint'
+      },
+      {
+        label: 'Redeem Application Management',
+        path: '/main/mintRedeem/mint-redeem/redeem'
+      }
+    ]
+  },
+  {
+    label: 'Transaction Records',
+    path: '/main/transaction/transaction-records',
+    orgKey: 30,
+    icon: <SlidersOutlined />
+  },
+  {
+    label: 'Token Information',
+    path: '/main/token/token-infomation',
+    orgKey: 30,
+    icon: <BlockOutlined />
+  },
+  {
+    label: 'OpenAPIs',
+    path: 'OpenAPIs',
+    orgKey: 30,
+    icon: <DownSquareOutlined />
+  },
 ];

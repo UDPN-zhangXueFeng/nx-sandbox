@@ -51,6 +51,10 @@ const LayOutMenuLeft = (props: {
         window.open(e.key);
         return;
       }
+      if (e.key === 'OpenAPIs') {
+        window.open('/UDPN AII-in-One Digital Currency Sandbox OpenAPI.pdf');
+        return;
+      }
       if (e.key.indexOf('currencyDefinitions') !== -1) {
         showModal();
         return;
