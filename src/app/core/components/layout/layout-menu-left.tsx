@@ -72,6 +72,23 @@ const LayOutMenuLeft = (props: {
     },
     [navigate]
   );
+
+  useEffect(() => {
+    const actPath = pathname.split('/');
+    let openKey = '';
+    if (actPath[5]) {
+      // 三级菜单
+      openKey = '/main/' + actPath[2] + '/' + actPath[3] + '/' + actPath[4];
+    } else if (actPath[4]) {
+      // 二级菜单
+      openKey = '/main/' + actPath[2] + '/' + actPath[3];
+    } else {
+      openKey = pathname;
+    }
+    setOpenKeys([openKey]);
+    setCurrent([pathname]);
+  }, [pathname]);
+  
   const { token } = useToken();
   const convertToAntMenuData = useCallback(
     (items: MenusType[]): MenuItem[] => {
