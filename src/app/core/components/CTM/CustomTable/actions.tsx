@@ -1,3 +1,4 @@
+import useHook from '@/app/hooks/useHook';
 import { DownOutlined } from '@ant-design/icons';
 import { ProCoreActionType } from '@ant-design/pro-utils';
 import { Button, Dropdown } from 'antd';
@@ -10,14 +11,15 @@ export const ActionsNode: <
   DataSource extends Record<string, GlobalAny>
 >(props: {
   record: DataSource;
-  t: (s: string) => string;
   modal: HookAPI;
   notification: NotificationInstance;
+  t: (s: string) => string;
   routerPush: GlobalAny;
   action: ProCoreActionType;
   actions: ActionsType<DataSource>[];
 }) => JSX.Element = (props) => {
-  const { record, t, modal, notification, routerPush, action, actions } = props;
+  const { record, modal, notification, routerPush, action, actions } = props;
+  const { t } = useHook('common');
   return (
     <Dropdown
       key={'ActionGroup'}
@@ -37,7 +39,7 @@ export const ActionsNode: <
               title: action1.confirm?.title ?? action1.label,
               content:
                 action1.confirm?.description ??
-                t('PRO_Question').replace('XXXX', action1.label),
+                t('PRO_Question',{ label: action1.label }),
               okText: t('ACT_Confirm'),
               cancelText: t('ACT_Cancel'),
               onOk: async () => {
@@ -48,7 +50,7 @@ export const ActionsNode: <
                     message: action1.confirm?.title ?? action1.label,
                     description:
                       action1?.confirm?.success?.(record) ??
-                      t('PRO_Success').replace('****', action1.label)
+                      t('PRO_Success', {p: action1.label})
                   });
                 }
 
@@ -77,14 +79,15 @@ export const ActionsNode: <
 
 export const ActionNode: <DataSource extends Record<string, GlobalAny>>(props: {
   record: DataSource;
-  t: (s: string) => string;
   modal: HookAPI;
   notification: NotificationInstance;
+  t: (s: string) => string;
   routerPush: GlobalAny;
   action: ProCoreActionType;
   actions: ActionsType<DataSource>;
 }) => JSX.Element = (props) => {
-  const { record, t, modal, notification, routerPush, action, actions } = props;
+  const { t: t1 } = useHook('common');
+  const { record, modal, notification, routerPush, action, actions } = props;
   return (
     <Button
       type="link"
@@ -97,7 +100,7 @@ export const ActionNode: <DataSource extends Record<string, GlobalAny>>(props: {
             title: actions.confirm?.title ?? actions.label,
             content:
               actions.confirm?.description ??
-              t('PRO_Question').replace('XXXX', actions.label),
+              t1('PRO_Question', { label: actions.label }),
             okText: actions.confirm?.okText,
             onOk: async () => {
               if (actions?.request) {
@@ -107,7 +110,7 @@ export const ActionNode: <DataSource extends Record<string, GlobalAny>>(props: {
                   message: actions.confirm?.title ?? actions.label,
                   description:
                     actions.confirm?.success?.(record) ??
-                    t('PRO_Success').replace('****', actions.label)
+                    t1('PRO_Success', {p: actions.label})
                 });
               }
 
