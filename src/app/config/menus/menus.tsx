@@ -88,7 +88,7 @@ export const MENUS = [
   },
   {
     label: 'Control & Monitoring',
-    path: '/main/management/system-log',
+    path: '/main/control/control-monitoring',
     orgKey: 29,
     icon: <FundProjectionScreenOutlined />,
     children: [
