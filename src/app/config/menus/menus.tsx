@@ -44,7 +44,7 @@ export const MENUS = [
   },
   {
     label: 'To Do List',
-    path: '/main/dashboard/todoList',
+    path: '/main/todo/todo-list',
     orgKey: 42,
     icon: <CheckSquareOutlined />
   },

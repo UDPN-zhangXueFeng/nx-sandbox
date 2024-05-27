@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import CciTodo from './cci-todo';
+import TodoList from './todo-list';
 
-describe('CciTodo', () => {
+describe('TodoList', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<CciTodo />);
+    const { baseElement } = render(<TodoList />);
     expect(baseElement).toBeTruthy();
   });
 });

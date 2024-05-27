@@ -8,7 +8,7 @@
 import React, { PropsWithChildren, ReactNode } from 'react';
 export interface ComPageTitleProps {
   title: string;
-  subTitle: string;
+  subTitle?: string;
   rsubTitle?: ReactNode;
 }
 export const ComTitle = (props: ComPageTitleProps) => {

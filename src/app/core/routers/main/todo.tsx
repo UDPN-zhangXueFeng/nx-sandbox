@@ -1,32 +1,32 @@
 /*
  * @Author: zhangxuefeng
  * @Date: 2024-03-04 11:10:40
- * @LastEditors: zhangxuefeng
- * @LastEditTime: 2024-04-07 15:02:14
+ * @LastEditors: chenyuting
+ * @LastEditTime: 2024-05-27 11:10:33
  * @Description:
  */
 
 import { Navigate, Outlet, RouteObject } from 'react-router-dom';
 
-const DashboardRoute: RouteObject = {
-  path: 'dashboard',
+const ToDoRoute: RouteObject = {
+  path: 'todo',
   element: <Outlet />,
   children: [
     {
       index: true,
-      element: <Navigate to="dashboard" />
+      element: <Navigate to="todo-list" />
     },
     {
-      path: 'dashboard',
+      path: 'todo-list',
       element: <Outlet />,
       children: [
         {
           index: true,
           async lazy() {
-            const { Dashboard } = await import(
-              '@/app/views/main-dashboard/dashboard'
+            const { TodoList } = await import(
+              '@/app/views/main-todo/todo-list'
             );
-            return { Component: Dashboard };
+            return { Component: TodoList };
           }
         }
       ]
@@ -34,4 +34,4 @@ const DashboardRoute: RouteObject = {
   ]
 };
 
-export default DashboardRoute;
+export default ToDoRoute;
